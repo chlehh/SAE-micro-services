@@ -1,0 +1,133 @@
+/* ===================== THÈME MAZE BANK (rouge & blanc) ===================== */
+:root{
+  --rouge:        #E4002B;
+  --rouge-fonce:  #B30021;
+  --rouge-clair:  #FFF5F6;
+  --noir:         #111111;
+  --gris-texte:   #6B7280;
+  --gris-bord:    #E5E7EB;
+  --gris-fond:    #F7F7F8;
+  --blanc:        #FFFFFF;
+  --ok:           #067647;
+  --ok-fond:      #ECFDF3;
+  --warn:         #B54708;
+  --warn-fond:    #FFFAEB;
+  --radius:       12px;
+  --ombre:        0 8px 24px rgba(17,17,17,.06);
+}
+
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  color:var(--noir);
+  background:var(--gris-fond);
+}
+a{color:var(--rouge);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- Logo ---------- */
+.logo{display:inline-flex;align-items:center;gap:10px}
+.logo .mark{width:40px;height:40px;border-radius:10px;background:var(--rouge);
+  display:inline-flex;align-items:center;justify-content:center}
+.logo .word{font-size:24px;font-weight:800;letter-spacing:.5px}
+.logo .word .m{color:var(--rouge)}
+.logo .word .b{color:var(--noir)}
+
+/* ---------- Navbar ---------- */
+.navbar{display:flex;align-items:center;justify-content:space-between;
+  background:var(--blanc);border-bottom:1px solid var(--gris-bord);
+  padding:12px 24px;position:sticky;top:0;z-index:10}
+.navbar .links{display:flex;align-items:center;gap:18px}
+.navbar .links a{color:var(--noir);font-weight:600;font-size:14px}
+.navbar .links a.active{color:var(--rouge)}
+.navbar .user{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--gris-texte)}
+
+/* ---------- Layout ---------- */
+.page{max-width:1080px;margin:0 auto;padding:24px}
+.page h1{font-size:22px;margin:0 0 4px}
+.page .sub{color:var(--gris-texte);font-size:14px;margin-bottom:20px}
+.grid{display:grid;gap:16px}
+.grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.section-title{font-size:16px;font-weight:700;margin:24px 0 12px}
+
+/* ---------- Cartes ---------- */
+.card{background:var(--blanc);border:1px solid var(--gris-bord);
+  border-radius:var(--radius);box-shadow:var(--ombre);padding:18px 20px}
+.card.accent{border-top:4px solid var(--rouge)}
+.account-card .iban{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--gris-texte)}
+.account-card .label{font-weight:700;margin-top:4px}
+.account-card .balance{font-size:28px;font-weight:800;margin:10px 0 2px}
+.account-card .meta{font-size:12px;color:var(--gris-texte)}
+
+/* ---------- Formulaires ---------- */
+label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+input,select{width:100%;padding:11px 13px;border:1px solid var(--gris-bord);
+  border-radius:10px;font-size:15px;background:var(--blanc);outline:none;transition:.15s}
+input:focus,select:focus{border-color:var(--rouge);box-shadow:0 0 0 3px rgba(228,0,43,.12)}
+.field{margin-bottom:14px}
+
+/* ---------- Boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:11px 18px;border:none;border-radius:10px;cursor:pointer;
+  font-size:15px;font-weight:700;background:var(--rouge);color:#fff;transition:.15s}
+.btn:hover{background:var(--rouge-fonce)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.block{width:100%}
+.btn.sm{padding:7px 12px;font-size:13px}
+.btn.outline{background:transparent;color:var(--rouge);border:1px solid var(--rouge)}
+.btn.outline:hover{background:var(--rouge-clair)}
+.btn.ghost{background:transparent;color:var(--noir);border:1px solid var(--gris-bord)}
+.btn.ghost:hover{background:var(--gris-fond)}
+.btn.danger{background:#fff;color:var(--rouge);border:1px solid var(--rouge)}
+.btn.danger:hover{background:var(--rouge-clair)}
+
+/* ---------- Tableaux ---------- */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;color:var(--gris-texte);font-weight:600;font-size:12px;
+  text-transform:uppercase;letter-spacing:.4px;padding:10px 12px;border-bottom:1px solid var(--gris-bord)}
+td{padding:12px;border-bottom:1px solid var(--gris-bord)}
+tr:last-child td{border-bottom:none}
+.table-wrap{background:var(--blanc);border:1px solid var(--gris-bord);
+  border-radius:var(--radius);overflow:hidden}
+
+/* ---------- Badges ---------- */
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}
+.badge.pending{background:var(--warn-fond);color:var(--warn)}
+.badge.approved{background:var(--ok-fond);color:var(--ok)}
+.badge.rejected{background:var(--rouge-clair);color:var(--rouge-fonce)}
+.badge.role{background:var(--rouge-clair);color:var(--rouge-fonce)}
+.badge.info{background:#EFF6FF;color:#1D4ED8}
+.badge.warning{background:var(--warn-fond);color:var(--warn)}
+.badge.error{background:var(--rouge-clair);color:var(--rouge-fonce)}
+
+/* ---------- Alertes ---------- */
+.alert{font-size:14px;padding:11px 14px;border-radius:10px;margin-bottom:14px}
+.alert.ok{background:var(--ok-fond);color:var(--ok);border:1px solid #A6F4C5}
+.alert.err{background:var(--rouge-clair);color:var(--rouge-fonce);border:1px solid #FBC9D2}
+
+/* ---------- Métriques ---------- */
+.metric{background:var(--gris-fond);border-radius:10px;padding:14px 16px}
+.metric .k{font-size:13px;color:var(--gris-texte)}
+.metric .v{font-size:24px;font-weight:800;margin-top:4px}
+
+/* ---------- Page d'authentification ---------- */
+.auth-wrap{min-height:100%;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:
+    radial-gradient(1100px 520px at 100% -10%, var(--rouge-clair), transparent),
+    var(--blanc)}
+.auth-card{width:100%;max-width:440px;background:var(--blanc);border:1px solid var(--gris-bord);
+  border-radius:14px;box-shadow:var(--ombre);overflow:hidden}
+.auth-card .topbar{height:6px;background:var(--rouge)}
+.auth-card .head{padding:24px 28px 4px;text-align:center}
+.auth-card .baseline{text-align:center;color:var(--gris-texte);font-size:11px;letter-spacing:3px;margin:6px 0 14px}
+.tabs{display:flex;border-bottom:1px solid var(--gris-bord);margin:0 28px}
+.tab{flex:1;text-align:center;padding:14px 0;font-weight:700;color:var(--gris-texte);
+  cursor:pointer;border-bottom:3px solid transparent}
+.tab.active{color:var(--rouge);border-bottom-color:var(--rouge)}
+.auth-form{padding:22px 28px 26px}
+.hint{font-size:12px;color:var(--gris-texte);text-align:center;margin-top:10px}
+.muted{color:var(--gris-texte);font-size:14px}

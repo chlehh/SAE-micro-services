@@ -1,0 +1,107 @@
+name: maze-bank
+
+services:
+  # Broker de messages : transporte les logs entre les services
+  nats:
+    image: nats:2.10-alpine
+    ports:
+      - "4222:4222"
+
+  auth-service:
+    build: ./auth-service
+    environment:
+      SERVICE_NAME: auth-service
+      SECRET_KEY: maze-bank-secret
+      INTERNAL_TOKEN: maze-internal-token
+      NATS_URL: nats://nats:4222
+      DATABASE_URL: sqlite:////data/auth.db
+    volumes:
+      - auth-data:/data
+    ports:
+      - "8001:8000"
+    depends_on:
+      - nats
+
+  account-service:
+    build: ./account-service
+    environment:
+      SERVICE_NAME: account-service
+      SECRET_KEY: maze-bank-secret
+      INTERNAL_TOKEN: maze-internal-token
+      NATS_URL: nats://nats:4222
+      DATABASE_URL: sqlite:////data/accounts.db
+    volumes:
+      - accounts-data:/data
+    ports:
+      - "8002:8000"
+    depends_on:
+      - nats
+
+  operation-service:
+    build: ./operation-service
+    environment:
+      SERVICE_NAME: operation-service
+      SECRET_KEY: maze-bank-secret
+      INTERNAL_TOKEN: maze-internal-token
+      NATS_URL: nats://nats:4222
+      DATABASE_URL: sqlite:////data/operations.db
+      ACCOUNT_SERVICE_URL: http://account-service:8000
+    volumes:
+      - operations-data:/data
+    ports:
+      - "8003:8000"
+    depends_on:
+      - nats
+      - account-service
+
+  validation-service:
+    build: ./validation-service
+    environment:
+      SERVICE_NAME: validation-service
+      SECRET_KEY: maze-bank-secret
+      INTERNAL_TOKEN: maze-internal-token
+      NATS_URL: nats://nats:4222
+      DATABASE_URL: sqlite:////data/validations.db
+      ACCOUNT_SERVICE_URL: http://account-service:8000
+      OPERATION_SERVICE_URL: http://operation-service:8000
+    volumes:
+      - validations-data:/data
+    ports:
+      - "8004:8000"
+    depends_on:
+      - nats
+      - account-service
+      - operation-service
+
+  log-service:
+    build: ./log-service
+    environment:
+      SERVICE_NAME: log-service
+      SECRET_KEY: maze-bank-secret
+      INTERNAL_TOKEN: maze-internal-token
+      NATS_URL: nats://nats:4222
+      DATABASE_URL: sqlite:////data/logs.db
+    volumes:
+      - logs-data:/data
+    ports:
+      - "8005:8000"
+    depends_on:
+      - nats
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - auth-service
+      - account-service
+      - operation-service
+      - validation-service
+      - log-service
+
+volumes:
+  auth-data:
+  accounts-data:
+  operations-data:
+  validations-data:
+  logs-data:
